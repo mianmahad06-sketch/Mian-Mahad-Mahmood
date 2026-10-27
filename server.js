@@ -18,33 +18,58 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
 const questions = [
- {cat:"IT-GRUNDLAGEN",q:"Welcher Computerbestandteil wird oft als Gehirn des Computers bezeichnet?",a:["CPU / Prozessor","SSD","Tastatur","Netzteil"],c:0,why:"Die CPU verarbeitet Befehle und Daten."},
- {cat:"NETZWERKE",q:"Wobei hilft DNS deinem Computer?",a:["Websitenamen in IP-Adressen umzuwandeln","Den Bildschirm heller zu machen","Den Akku schneller aufzuladen","Jeden Virus zu blockieren"],c:0,why:"DNS löst Domainnamen in IP-Adressen auf."},
- {cat:"IT-GRUNDLAGEN",q:"Was speichert RAM hauptsächlich, während Programme laufen?",a:["Vorübergehende Arbeitsdaten","Dateien dauerhaft ohne Strom","Gedruckte Seiten","Nur WLAN-Passwörter"],c:0,why:"RAM ist ein schneller, temporärer Speicher für aktive Programme."},
- {cat:"NETZWERKE",q:"Welche dieser Adressen ist eine private IPv4-Adresse?",a:["8.8.8.8","172.20.5.4","1.1.1.1","193.10.1.5"],c:1,why:"172.20.5.4 liegt im privaten Bereich 172.16.0.0–172.31.255.255."},
- {cat:"NETZWERKE",q:"Welches Gerät leitet Daten zwischen verschiedenen IP-Netzwerken weiter?",a:["Router","Maus","Monitor","Webcam"],c:0,why:"Router leiten Datenpakete zwischen Netzwerken weiter."},
- {cat:"CYBERSICHERHEIT",q:"Eine unerwartete E-Mail fragt nach deinem Passwort. Was ist am sichersten?",a:["Mit dem Passwort antworten","Auf jeden Link klicken","Die Nachricht melden und den Absender überprüfen","Sie an alle weiterleiten"],c:2,why:"Unerwartete Passwortanfragen können Phishing sein."},
- {cat:"TECH-HUMOR",q:"Dein Computer sagt: „Ich brauche eine Pause!“ Was solltest du zuerst tun?",a:["Ihm einen kleinen Kaffee geben","Prüfen, ob er überhitzt oder überlastet ist","Ihn in den Kühlschrank legen","Ihn die Hausaufgaben machen lassen"],c:1,why:"Temperatur und Auslastung zu prüfen, ist eine sinnvolle Fehlersuche."},
- {cat:"TECH-HUMOR",q:"Das WLAN verschwindet kurz vor deinem Online-Test. Was ist der beste erste Schritt?",a:["Den Mond beschuldigen","WLAN-Verbindung und Router überprüfen","Den Laptop aus dem Fenster werfen","Das Netzwerk in „Bitte funktionieren“ umbenennen"],c:1,why:"Beginne mit den grundlegenden Verbindungsprüfungen."},
- {cat:"IT-GRUNDLAGEN",q:"Welches Zahlensystem verwendet nur 0 und 1?",a:["Dezimalsystem","Binärsystem","Hexadezimalsystem","Römische Zahlen"],c:1,why:"Das Binärsystem hat die Basis 2 und verwendet 0 und 1."},
- {cat:"TECH-HUMOR",q:"Was ist der Lieblingssnack eines Computers?",a:["Mikrochips","Mainboard-Pizza","USB-Spaghetti","Nur Cloud-Kekse"],c:0,why:"Mikrochips – ein Wortspiel aus der Technik!"},
- {cat:"NETZWERKE",q:"Was macht DHCP üblicherweise in einem Netzwerk?",a:["IP-Einstellungen automatisch zuweisen","Fotos bearbeiten","Kaputte Bildschirme reparieren","Jede Datei selbstständig verschlüsseln"],c:0,why:"DHCP kann IP-Adressen und weitere Netzwerkeinstellungen automatisch zuweisen."},
- {cat:"TECH-HUMOR",q:"Ein Schüler hat 100 Tabs offen und der Laptop ist langsam. Was ist ein sinnvoller Rat?",a:["Noch 100 öffnen","Tabs schließen und die Ressourcennutzung prüfen","Den Laptop schütteln","Die Helligkeit auf Maximum stellen"],c:1,why:"Viele Tabs können Speicher und Rechenleistung beanspruchen."},
- {cat:"IT-GRUNDLAGEN",q:"Was davon ist ein Betriebssystem?",a:["Windows","HDMI","Ethernetkabel","USB-Anschluss"],c:0,why:"Windows ist ein Betriebssystem."},
- {cat:"TECH-HUMOR",q:"Warum ging der Computer zum Arzt?",a:["Er hatte einen Virus","Er hatte seine Schuhe verloren","Er hatte zu viel Pizza gegessen","Er hatte seinen Geburtstag vergessen"],c:0,why:"Ein klassischer Computerwitz: Er hatte einen Virus!"},
- {cat:"CYBERSICHERHEIT",q:"Welche Gewohnheit verbessert die Kontosicherheit?",a:["Ein einfaches Passwort überall verwenden","Passwörter mit Mitschülern teilen","Einzigartige Passwörter und Mehr-Faktor-Authentifizierung verwenden","Das Passwort an die Wand schreiben"],c:2,why:"Einzigartige Passwörter und Mehr-Faktor-Authentifizierung erhöhen die Sicherheit."},
- {cat:"ENDGEGNER",q:"BONUS: Was soll die Klasse mit dem lustigsten Router-Witz machen?",a:["Über die lustigste Antwort abstimmen","Das Klassenzimmer neu starten","Den Router verstecken","Alle Passwörter ändern"],c:0,why:"Lasst die Klasse über den lustigsten Witz abstimmen!"}
+ {cat:"IPV4 & SUBNETTING",q:"Ein Netzwerk nutzt 192.168.10.0/26. Wie viele nutzbare Host-Adressen gibt es pro Subnetz?",a:["30","62","64","126"],c:1,why:"Bei /26 bleiben 6 Host-Bits: 2^6 − 2 = 62 nutzbare Host-Adressen."},
+ {cat:"IPV4 & SUBNETTING",q:"Welche Subnetzmaske entspricht dem Präfix /27?",a:["255.255.255.0","255.255.255.128","255.255.255.224","255.255.255.240"],c:2,why:"/27 bedeutet 27 gesetzte Bits: 255.255.255.224."},
+ {cat:"IPV4 & SUBNETTING",q:"Welche Adresse liegt im privaten IPv4-Bereich?",a:["172.32.1.10","172.20.1.10","172.15.1.10","172.40.1.10"],c:1,why:"Der private Bereich reicht von 172.16.0.0 bis 172.31.255.255."},
+ {cat:"IPV4 & SUBNETTING",q:"Ein PC hat 192.168.1.70/26. Zu welchem Netzwerk gehört er?",a:["192.168.1.0","192.168.1.64","192.168.1.70","192.168.1.128"],c:1,why:"Ein /26-Subnetz hat Blockgrößen von 64. Die Adresse 70 liegt im Bereich 64–127."},
+ {cat:"IPV4 & SUBNETTING",q:"Welche IPv4-Adresse ist die Broadcast-Adresse für 192.168.5.0/24?",a:["192.168.5.0","192.168.5.1","192.168.5.254","192.168.5.255"],c:3,why:"Bei einem /24-Netz ist die letzte Adresse .255 die Broadcast-Adresse."},
+ {cat:"BINÄR & HEX",q:"Welche Dezimalzahl entspricht 10110110₂?",a:["166","174","182","190"],c:2,why:"128 + 32 + 16 + 4 + 2 = 182."},
+ {cat:"BINÄR & HEX",q:"Welche Dezimalzahl entspricht 3A₁₆?",a:["48","56","58","60"],c:2,why:"3 × 16 + 10 = 58."},
+ {cat:"BINÄR & HEX",q:"Welche Hexadezimalzahl entspricht 254₁₀?",a:["EF","F0","FE","FF"],c:2,why:"254 geteilt durch 16 ergibt 15 Rest 14, also FE."},
+ {cat:"CISCO IOS",q:"Welcher Befehl wechselt vom User-EXEC-Modus in den Privileged-EXEC-Modus?",a:["configure terminal","enable","login","interface vlan 1"],c:1,why:"Mit enable wechselt man zu Switch# beziehungsweise Router#."},
+ {cat:"CISCO IOS",q:"In welchem Modus wird hostname Router1 konfiguriert?",a:["User-EXEC-Modus","Privileged-EXEC-Modus","Global Configuration Mode","ROMMON"],c:2,why:"Der hostname-Befehl wird im globalen Konfigurationsmodus eingegeben."},
+ {cat:"CISCO IOS",q:"Welcher Befehl speichert die laufende Konfiguration dauerhaft in NVRAM?",a:["copy startup-config running-config","write erase","copy running-config startup-config","reload"],c:2,why:"Damit wird running-config als startup-config gespeichert."},
+ {cat:"CISCO IOS",q:"Welche Aussage zu RAM und NVRAM ist richtig?",a:["RAM speichert die Startkonfiguration dauerhaft","NVRAM enthält normalerweise die startup-config","NVRAM ist flüchtiger Arbeitsspeicher","RAM enthält nur das IOS-Image dauerhaft"],c:1,why:"Die startup-config wird normalerweise im nichtflüchtigen NVRAM gespeichert."},
+ {cat:"NETZWERKPROTOKOLLE",q:"Welches Protokoll übersetzt einen Domainnamen wie beispiel.de in eine IP-Adresse?",a:["DHCP","DNS","FTP","ARP"],c:1,why:"DNS löst Domainnamen in IP-Adressen auf."},
+ {cat:"NETZWERKPROTOKOLLE",q:"Welches Protokoll weist Clients häufig automatisch IP-Adressen zu?",a:["DHCP","ICMP","SSH","SMTP"],c:0,why:"DHCP vergibt automatisch IP-Konfigurationen wie Adresse, Gateway und DNS-Server."},
+ {cat:"OSI-MODELL",q:"Auf welcher OSI-Schicht arbeitet ein gewöhnlicher Ethernet-Switch hauptsächlich?",a:["Schicht 1 – Bitübertragung","Schicht 2 – Sicherung","Schicht 3 – Vermittlung","Schicht 7 – Anwendung"],c:1,why:"Ein Layer-2-Switch leitet Frames anhand von MAC-Adressen weiter."},
+ {cat:"OSI-MODELL",q:"Welche OSI-Schicht ist hauptsächlich für Routing zwischen IP-Netzwerken zuständig?",a:["Schicht 2","Schicht 3","Schicht 4","Schicht 6"],c:1,why:"Routing gehört zur Vermittlungsschicht (Layer 3)." },
+ {cat:"FEHLERSUCHE",q:"Ein PC kann 8.8.8.8 erreichen, aber keine Webseitennamen öffnen. Was sollte man zuerst prüfen?",a:["DNS-Konfiguration","Monitorkabel","Tastaturlayout","Druckertreiber"],c:0,why:"Wenn IP-Verbindungen funktionieren, aber Namen nicht, ist DNS ein naheliegender Prüfpunkt."},
+ {cat:"FEHLERSUCHE",q:"Ein PC hat die IP-Adresse 169.254.12.8 erhalten. Was deutet das meistens an?",a:["DHCP konnte keine Adresse vergeben","Der PC hat eine öffentliche IP","DNS funktioniert perfekt","Der Router hat IPv6 deaktiviert"],c:0,why:"Eine 169.254.x.x-Adresse ist eine link-lokale IPv4-Adresse, die oft bei fehlgeschlagenem DHCP erscheint."},
+ {cat:"CYBERSICHERHEIT",q:"Was schützt ein Konto zusätzlich zum Passwort am besten?",a:["Dasselbe Passwort überall verwenden","Mehr-Faktor-Authentifizierung","Passwort im Klassengruppenchat teilen","Alle Sicherheitsupdates deaktivieren"],c:1,why:"Mehr-Faktor-Authentifizierung verlangt einen zusätzlichen Nachweis neben dem Passwort."},
+ {cat:"CYBERSICHERHEIT",q:"Welche Aussage beschreibt Phishing am besten?",a:["Ein Verfahren zum Kühlen der CPU","Ein Angriff, bei dem gefälschte Nachrichten Daten stehlen sollen","Ein Ethernet-Kabelstandard","Eine Methode zur Festplattenformatierung"],c:1,why:"Phishing täuscht Nutzer, damit sie Passwörter, Zahlungsdaten oder andere Informationen preisgeben."},
+ {cat:"ENDGEGNER",q:"Ein Gerät mit 192.168.1.10/24 möchte 192.168.2.20 erreichen. Was benötigt es normalerweise, um das andere Netzwerk zu erreichen?",a:["Einen Standard-Gateway/Router","Nur eine andere MAC-Adresse selbst wählen","Eine größere Bildschirmauflösung","Den DNS-Server als Netzwerkkabel"],c:0,why:"Ziele außerhalb des eigenen Subnetzes werden normalerweise an den Standard-Gateway gesendet."}
 ];
 
-let state = { roomOpen:false, gameStarted:false, questionIndex:-1, revealed:false, teams:{}, answers:{} };
+const QUESTION_SECONDS = 60;
+let questionTimer = null;
+let state = { roomOpen:false, gameStarted:false, questionIndex:-1, revealed:false, questionEndsAt:null, teams:{}, answers:{} };
 const clients = new Map();
+function stopQuestionTimer(){ if(questionTimer){clearTimeout(questionTimer);questionTimer=null;} }
+function beginQuestionTimer(){
+ stopQuestionTimer();
+ state.questionEndsAt = Date.now() + QUESTION_SECONDS * 1000;
+ questionTimer = setTimeout(() => { if(state.gameStarted && !state.revealed && state.questionIndex >= 0){ revealAnswer(); } }, QUESTION_SECONDS * 1000);
+}
+function revealAnswer(){
+ if(state.revealed || state.questionIndex < 0) return;
+ stopQuestionTimer();
+ state.revealed = true;
+ state.questionEndsAt = null;
+ const correct = questions[state.questionIndex].c;
+ for(const [id,a] of Object.entries(state.answers)){
+   if(a.choice === correct && state.teams[id] && !a.scored){ state.teams[id].score += 100; a.scored = true; }
+ }
+ broadcast();
+}
 function send(ws, obj) { if (ws.readyState === 1) ws.send(JSON.stringify(obj)); }
 function broadcast() {
  const safe = {
    roomOpen: state.roomOpen, gameStarted: state.gameStarted,
    questionIndex: state.questionIndex, revealed: state.revealed,
    teams: Object.values(state.teams).map(t=>({id:t.id,name:t.name,score:t.score,isHost:t.isHost})),
-   answers: Object.fromEntries(Object.entries(state.answers).map(([id,a])=>[id,{submitted:true}])),
+   answers: Object.fromEntries(Object.entries(state.answers).map(([id,a])=>[id,{submitted:true,choice:a.choice}])),
+   secondsLeft: state.questionEndsAt ? Math.max(0, Math.ceil((state.questionEndsAt-Date.now())/1000)) : 0,
    question: state.questionIndex >= 0 ? {
      cat: questions[state.questionIndex].cat, q: questions[state.questionIndex].q,
      a: questions[state.questionIndex].a,
@@ -81,20 +106,20 @@ wss.on("connection", ws => {
    const team=state.teams[ws.teamId];
    if (!team) return fail(ws,"Join the room first.");
    if (m.type==="start" && team.isHost) {
-    state.gameStarted=true; state.questionIndex=0; state.revealed=false; state.answers={}; broadcast();
+    state.gameStarted=true; state.questionIndex=0; state.revealed=false; state.answers={}; beginQuestionTimer(); broadcast();
    } else if (m.type==="reveal" && team.isHost && state.questionIndex>=0) {
-    state.revealed=true;
-    const correct=questions[state.questionIndex].c;
-    for (const [id,a] of Object.entries(state.answers)) if (a.choice===correct && state.teams[id]) state.teams[id].score+=100;
-    broadcast();
+    revealAnswer();
    } else if (m.type==="next" && team.isHost) {
-    if (state.questionIndex+1 >= questions.length) { state.gameStarted=false; state.questionIndex=-2; broadcast(); }
-    else { state.questionIndex++; state.revealed=false; state.answers={}; broadcast(); }
+    stopQuestionTimer();
+    if (state.questionIndex+1 >= questions.length) { state.gameStarted=false; state.questionIndex=-2; state.revealed=false; state.questionEndsAt=null; broadcast(); }
+    else { state.questionIndex++; state.revealed=false; state.answers={}; beginQuestionTimer(); broadcast(); }
    } else if (m.type==="answer" && state.gameStarted && !state.revealed && state.questionIndex>=0 && Number.isInteger(m.choice) && m.choice>=0 && m.choice<4) {
-    state.answers[team.id]={choice:m.choice};
+    if(state.answers[team.id]) return;
+    state.answers[team.id]={choice:m.choice,scored:false};
     broadcast();
    } else if (m.type==="reset" && team.isHost) {
-    state={roomOpen:true,gameStarted:false,questionIndex:-1,revealed:false,teams:Object.fromEntries(Object.values(state.teams).map(t=>[t.id,{...t,score:0}])),answers:{}};
+    stopQuestionTimer();
+    state={roomOpen:true,gameStarted:false,questionIndex:-1,revealed:false,questionEndsAt:null,teams:Object.fromEntries(Object.values(state.teams).map(t=>[t.id,{...t,score:0}])),answers:{}};
     broadcast();
    }
   }
