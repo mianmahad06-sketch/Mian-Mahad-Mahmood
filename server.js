@@ -18,22 +18,22 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
 const questions = [
- {cat:"IT BASICS",q:"Which computer part is often called the brain of the computer?",a:["CPU","SSD","Keyboard","Power supply"],c:0,why:"The CPU processes instructions and data."},
- {cat:"NETWORKING",q:"What does DNS help your computer do?",a:["Turn website names into IP addresses","Make the screen brighter","Charge the battery faster","Block every virus"],c:0,why:"DNS resolves domain names to IP addresses."},
- {cat:"IT BASICS",q:"What does RAM mainly store while programs are running?",a:["Temporary working data","Files forever without power","Printed pages","Wi-Fi passwords only"],c:0,why:"RAM is fast, temporary memory for active programs."},
- {cat:"NETWORKING",q:"Which of these is a private IPv4 address?",a:["8.8.8.8","172.20.5.4","1.1.1.1","193.10.1.5"],c:1,why:"172.20.5.4 is in the private 172.16.0.0–172.31.255.255 range."},
- {cat:"NETWORKING",q:"Which device forwards data between different IP networks?",a:["Router","Mouse","Monitor","Webcam"],c:0,why:"Routers forward packets between networks."},
- {cat:"CYBER SAFETY",q:"An unexpected email asks for your password. What is safest?",a:["Reply with the password","Click every link","Report it and verify the sender","Forward it to everyone"],c:2,why:"Unexpected password requests can be phishing."},
- {cat:"FUNNY TECH",q:"Your computer says “I need a break!” What should you do first in real life?",a:["Give it a tiny coffee","Check whether it is overheating or overloaded","Put it in the fridge","Ask it to do homework"],c:1,why:"Checking heat and workload is sensible troubleshooting."},
- {cat:"FUNNY TECH",q:"The Wi-Fi disappears just before your online test. Best first move?",a:["Blame the moon","Check the Wi-Fi connection and router","Throw the laptop out the window","Rename the network “Please Work”"],c:1,why:"Start with basic connection checks."},
- {cat:"IT BASICS",q:"Which number system uses only 0 and 1?",a:["Decimal","Binary","Hexadecimal","Roman numerals"],c:1,why:"Binary is base 2 and uses 0 and 1."},
- {cat:"FUNNY TECH",q:"What is a computer’s favourite snack?",a:["Microchips","Motherboard pizza","USB spaghetti","Cloud cookies only"],c:0,why:"Microchips! It’s a tech pun."},
- {cat:"NETWORKING",q:"What does DHCP commonly do on a network?",a:["Automatically assigns IP settings","Edits photos","Repairs broken screens","Encrypts every file by itself"],c:0,why:"DHCP can automatically assign IP addresses and other settings."},
- {cat:"FUNNY TECH",q:"A student has 100 tabs open and the laptop is slow. Sensible advice?",a:["Open 100 more","Close tabs and check resource usage","Shake the laptop","Turn brightness to maximum"],c:1,why:"Many tabs can consume memory and processing resources."},
- {cat:"IT BASICS",q:"Which one is an operating system?",a:["Windows","HDMI","Ethernet cable","USB port"],c:0,why:"Windows is an operating system."},
- {cat:"FUNNY TECH",q:"Why did the computer go to the doctor?",a:["It caught a virus","It lost its shoes","It ate too much pizza","It forgot its birthday"],c:0,why:"A classic computer joke: it caught a virus!"},
- {cat:"CYBER SAFETY",q:"Which is a good account-security habit?",a:["Use one simple password everywhere","Share passwords with classmates","Use unique passwords and multifactor authentication","Write your password on the wall"],c:2,why:"Unique passwords and multifactor authentication improve account security."},
- {cat:"FINAL BOSS",q:"BONUS: What should the class do with the funniest router joke?",a:["Vote for the funniest answer","Restart the classroom","Hide the router","Change every password"],c:0,why:"Let the class vote for the funniest answer!"}
+ {cat:"IT-GRUNDLAGEN",q:"Welcher Computerbestandteil wird oft als Gehirn des Computers bezeichnet?",a:["CPU / Prozessor","SSD","Tastatur","Netzteil"],c:0,why:"Die CPU verarbeitet Befehle und Daten."},
+ {cat:"NETZWERKE",q:"Wobei hilft DNS deinem Computer?",a:["Websitenamen in IP-Adressen umzuwandeln","Den Bildschirm heller zu machen","Den Akku schneller aufzuladen","Jeden Virus zu blockieren"],c:0,why:"DNS löst Domainnamen in IP-Adressen auf."},
+ {cat:"IT-GRUNDLAGEN",q:"Was speichert RAM hauptsächlich, während Programme laufen?",a:["Vorübergehende Arbeitsdaten","Dateien dauerhaft ohne Strom","Gedruckte Seiten","Nur WLAN-Passwörter"],c:0,why:"RAM ist ein schneller, temporärer Speicher für aktive Programme."},
+ {cat:"NETZWERKE",q:"Welche dieser Adressen ist eine private IPv4-Adresse?",a:["8.8.8.8","172.20.5.4","1.1.1.1","193.10.1.5"],c:1,why:"172.20.5.4 liegt im privaten Bereich 172.16.0.0–172.31.255.255."},
+ {cat:"NETZWERKE",q:"Welches Gerät leitet Daten zwischen verschiedenen IP-Netzwerken weiter?",a:["Router","Maus","Monitor","Webcam"],c:0,why:"Router leiten Datenpakete zwischen Netzwerken weiter."},
+ {cat:"CYBERSICHERHEIT",q:"Eine unerwartete E-Mail fragt nach deinem Passwort. Was ist am sichersten?",a:["Mit dem Passwort antworten","Auf jeden Link klicken","Die Nachricht melden und den Absender überprüfen","Sie an alle weiterleiten"],c:2,why:"Unerwartete Passwortanfragen können Phishing sein."},
+ {cat:"TECH-HUMOR",q:"Dein Computer sagt: „Ich brauche eine Pause!“ Was solltest du zuerst tun?",a:["Ihm einen kleinen Kaffee geben","Prüfen, ob er überhitzt oder überlastet ist","Ihn in den Kühlschrank legen","Ihn die Hausaufgaben machen lassen"],c:1,why:"Temperatur und Auslastung zu prüfen, ist eine sinnvolle Fehlersuche."},
+ {cat:"TECH-HUMOR",q:"Das WLAN verschwindet kurz vor deinem Online-Test. Was ist der beste erste Schritt?",a:["Den Mond beschuldigen","WLAN-Verbindung und Router überprüfen","Den Laptop aus dem Fenster werfen","Das Netzwerk in „Bitte funktionieren“ umbenennen"],c:1,why:"Beginne mit den grundlegenden Verbindungsprüfungen."},
+ {cat:"IT-GRUNDLAGEN",q:"Welches Zahlensystem verwendet nur 0 und 1?",a:["Dezimalsystem","Binärsystem","Hexadezimalsystem","Römische Zahlen"],c:1,why:"Das Binärsystem hat die Basis 2 und verwendet 0 und 1."},
+ {cat:"TECH-HUMOR",q:"Was ist der Lieblingssnack eines Computers?",a:["Mikrochips","Mainboard-Pizza","USB-Spaghetti","Nur Cloud-Kekse"],c:0,why:"Mikrochips – ein Wortspiel aus der Technik!"},
+ {cat:"NETZWERKE",q:"Was macht DHCP üblicherweise in einem Netzwerk?",a:["IP-Einstellungen automatisch zuweisen","Fotos bearbeiten","Kaputte Bildschirme reparieren","Jede Datei selbstständig verschlüsseln"],c:0,why:"DHCP kann IP-Adressen und weitere Netzwerkeinstellungen automatisch zuweisen."},
+ {cat:"TECH-HUMOR",q:"Ein Schüler hat 100 Tabs offen und der Laptop ist langsam. Was ist ein sinnvoller Rat?",a:["Noch 100 öffnen","Tabs schließen und die Ressourcennutzung prüfen","Den Laptop schütteln","Die Helligkeit auf Maximum stellen"],c:1,why:"Viele Tabs können Speicher und Rechenleistung beanspruchen."},
+ {cat:"IT-GRUNDLAGEN",q:"Was davon ist ein Betriebssystem?",a:["Windows","HDMI","Ethernetkabel","USB-Anschluss"],c:0,why:"Windows ist ein Betriebssystem."},
+ {cat:"TECH-HUMOR",q:"Warum ging der Computer zum Arzt?",a:["Er hatte einen Virus","Er hatte seine Schuhe verloren","Er hatte zu viel Pizza gegessen","Er hatte seinen Geburtstag vergessen"],c:0,why:"Ein klassischer Computerwitz: Er hatte einen Virus!"},
+ {cat:"CYBERSICHERHEIT",q:"Welche Gewohnheit verbessert die Kontosicherheit?",a:["Ein einfaches Passwort überall verwenden","Passwörter mit Mitschülern teilen","Einzigartige Passwörter und Mehr-Faktor-Authentifizierung verwenden","Das Passwort an die Wand schreiben"],c:2,why:"Einzigartige Passwörter und Mehr-Faktor-Authentifizierung erhöhen die Sicherheit."},
+ {cat:"ENDGEGNER",q:"BONUS: Was soll die Klasse mit dem lustigsten Router-Witz machen?",a:["Über die lustigste Antwort abstimmen","Das Klassenzimmer neu starten","Den Router verstecken","Alle Passwörter ändern"],c:0,why:"Lasst die Klasse über den lustigsten Witz abstimmen!"}
 ];
 
 let state = { roomOpen:false, gameStarted:false, questionIndex:-1, revealed:false, teams:{}, answers:{} };
@@ -47,7 +47,7 @@ function broadcast() {
    answers: Object.fromEntries(Object.entries(state.answers).map(([id,a])=>[id,{submitted:true}])),
    question: state.questionIndex >= 0 ? {
      cat: questions[state.questionIndex].cat, q: questions[state.questionIndex].q,
-     a: state.revealed ? questions[state.questionIndex].a : null,
+     a: questions[state.questionIndex].a,
      c: state.revealed ? questions[state.questionIndex].c : null,
      why: state.revealed ? questions[state.questionIndex].why : null,
      total: questions.length, number: state.questionIndex+1
