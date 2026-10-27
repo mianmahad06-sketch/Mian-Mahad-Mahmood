@@ -114,7 +114,8 @@ wss.on("connection", ws => {
     if (state.questionIndex+1 >= questions.length) { state.gameStarted=false; state.questionIndex=-2; state.revealed=false; state.questionEndsAt=null; broadcast(); }
     else { state.questionIndex++; state.revealed=false; state.answers={}; beginQuestionTimer(); broadcast(); }
    } else if (m.type==="answer" && state.gameStarted && !state.revealed && state.questionIndex>=0 && Number.isInteger(m.choice) && m.choice>=0 && m.choice<4) {
-    if(state.answers[team.id]) return;
+    // Let the participant change their choice until the timer expires or the host reveals.
+    // The latest choice replaces the previous one; points are awarded only once at reveal.
     state.answers[team.id]={choice:m.choice,scored:false};
     broadcast();
    } else if (m.type==="reset" && team.isHost) {
