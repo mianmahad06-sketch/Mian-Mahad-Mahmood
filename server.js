@@ -41,6 +41,23 @@ const questions = [
  {cat:"ENDGEGNER",q:"Ein Gerät mit 192.168.1.10/24 möchte 192.168.2.20 erreichen. Was benötigt es normalerweise, um das andere Netzwerk zu erreichen?",a:["Einen Standard-Gateway/Router","Nur eine andere MAC-Adresse selbst wählen","Eine größere Bildschirmauflösung","Den DNS-Server als Netzwerkkabel"],c:0,why:"Ziele außerhalb des eigenen Subnetzes werden normalerweise an den Standard-Gateway gesendet."}
 ];
 
+
+let activeQuestions = [...questions];
+let previousQuestionOrder = [];
+function shuffleQuestionsForNewGame(){
+ const order = [...questions];
+ for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
+ if(previousQuestionOrder.length===order.length && order.every((q,i)=>q===previousQuestionOrder[i])){
+   [order[0],order[1]]=[order[1],order[0]];
+ }
+ if(previousQuestionOrder.length && order[0]===previousQuestionOrder[0]){
+   const j=order.findIndex(q=>q!==previousQuestionOrder[0]);
+   if(j>0)[order[0],order[j]]=[order[j],order[0]];
+ }
+ activeQuestions=order;
+ previousQuestionOrder=[...order];
+}
+
 const QUESTION_SECONDS = 60;
 let questionTimer = null;
 let state = { roomOpen:false, gameStarted:false, questionIndex:-1, revealed:false, questionEndsAt:null, teams:{}, answers:{} };
@@ -56,7 +73,7 @@ function revealAnswer(){
  stopQuestionTimer();
  state.revealed = true;
  state.questionEndsAt = null;
- const correct = questions[state.questionIndex].c;
+ const correct = activeQuestions[state.questionIndex].c;
  for(const [id,a] of Object.entries(state.answers)){
    if(a.choice === correct && state.teams[id] && !a.scored){ state.teams[id].score += 100; a.scored = true; }
  }
@@ -71,10 +88,10 @@ function broadcast() {
    answers: Object.fromEntries(Object.entries(state.answers).map(([id,a])=>[id,{submitted:true,choice:a.choice}])),
    secondsLeft: state.questionEndsAt ? Math.max(0, Math.ceil((state.questionEndsAt-Date.now())/1000)) : 0,
    question: state.questionIndex >= 0 ? {
-     cat: questions[state.questionIndex].cat, q: questions[state.questionIndex].q,
-     a: questions[state.questionIndex].a,
-     c: state.revealed ? questions[state.questionIndex].c : null,
-     why: state.revealed ? questions[state.questionIndex].why : null,
+     cat: activeQuestions[state.questionIndex].cat, q: activeQuestions[state.questionIndex].q,
+     a: activeQuestions[state.questionIndex].a,
+     c: state.revealed ? activeQuestions[state.questionIndex].c : null,
+     why: state.revealed ? activeQuestions[state.questionIndex].why : null,
      total: questions.length, number: state.questionIndex+1
    } : null
  };
@@ -106,7 +123,7 @@ wss.on("connection", ws => {
    const team=state.teams[ws.teamId];
    if (!team) return fail(ws,"Join the room first.");
    if (m.type==="start" && team.isHost) {
-    state.gameStarted=true; state.questionIndex=0; state.revealed=false; state.answers={}; beginQuestionTimer(); broadcast();
+    shuffleQuestionsForNewGame(); state.gameStarted=true; state.questionIndex=0; state.revealed=false; state.answers={}; beginQuestionTimer(); broadcast();
    } else if (m.type==="reveal" && team.isHost && state.questionIndex>=0) {
     revealAnswer();
    } else if (m.type==="next" && team.isHost) {
